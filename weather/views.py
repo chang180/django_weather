@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.http import HttpResponse
 
 # Create your views here.
@@ -23,10 +22,10 @@ def get_weather(request):
     
     data = response.json()
     # 假設我們只需要其中的一些關鍵數據
-    weather_data = data.get('records', {}).get('location', [])
+    weather_data = data.get('records', {}).get('Station', [])
     processed_data = [{
-        'locationName': loc['locationName'],
-        'temperature': loc['weatherElement'][0]['elementValue']['value']
-    } for loc in weather_data]
+        'stationName': station['StationName'],
+        'temperature': station['WeatherElement']['AirTemperature']
+    } for station in weather_data]
     
     return JsonResponse(processed_data, safe=False)
